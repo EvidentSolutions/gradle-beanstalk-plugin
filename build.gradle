@@ -1,0 +1,13 @@
+apply plugin: 'java-gradle-plugin'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile "com.amazonaws:aws-java-sdk:1.9.25"
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
