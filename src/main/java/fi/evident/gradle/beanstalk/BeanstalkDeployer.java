@@ -66,7 +66,7 @@ public class BeanstalkDeployer {
         if (numberOfVersionsToRemove <= 0)
             return emptyList();
 
-        ArrayList<ApplicationVersionDescription> result = new ArrayList<>(versions);
+        ArrayList<ApplicationVersionDescription> result = new ArrayList<ApplicationVersionDescription>(versions);
         sort(result, new Comparator<ApplicationVersionDescription>() {
             @Override
             public int compare(ApplicationVersionDescription o1, ApplicationVersionDescription o2) {
@@ -129,7 +129,7 @@ public class BeanstalkDeployer {
         DescribeEnvironmentsRequest req = new DescribeEnvironmentsRequest();
         req.setApplicationName(applicationName);
 
-        Set<String> result = new TreeSet<>();
+        Set<String> result = new TreeSet<String>();
         for (EnvironmentDescription description : elasticBeanstalk.describeEnvironments(req).getEnvironments())
             result.add(description.getVersionLabel());
 
