@@ -5,14 +5,18 @@ plugins {
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'groovy'
 apply plugin: 'maven-publish'
-apply plugin: 'java'
 
 repositories {
     jcenter()
 }
 
+ext {
+    awsApiVersion = '1.9.25'
+}
+
 dependencies {
-    compile "com.amazonaws:aws-java-sdk:1.9.25"
+    compile "com.amazonaws:aws-java-sdk-elasticbeanstalk:$awsApiVersion"
+    compile "com.amazonaws:aws-java-sdk-s3:$awsApiVersion"
 }
 
 group = 'fi.evident.gradle.beanstalk'
