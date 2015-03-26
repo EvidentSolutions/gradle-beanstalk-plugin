@@ -4,25 +4,17 @@ Gradle plugin for deploying WARs to AWS Elastic Beanstalk.
 
 ## Usage
 
-First apply the plugin:
- 
-    buildscript {
-        repositories {
-            jcenter()
-        }
-        dependencies {
-            classpath "fi.evident.gradle.beanstalk:gradle-beanstalk-plugin:0.0.2"
-        }
-    }
-    apply plugin: 'fi.evident.beanstalk'
-
-Create `~/.aws/credentials` with a profile for your app:
+First, create `~/.aws/credentials` with a profile for your app:
 
     [my-profile]
     aws_access_key_id=YOUR_ACCESS_KEY_ID
     aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
 
 Next, configure some deployments in your `build.gradle`:
+
+    plugins {
+        id "fi.evident.beanstalk" version "0.0.3"
+    }
 
     beanstalk {
         profile = 'my-profile'
