@@ -5,7 +5,6 @@ import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import org.gradle.api.DefaultTask;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
@@ -31,7 +30,6 @@ public class DeployTask extends DefaultTask {
         this.beanstalk = beanstalk;
     }
 
-    @InputFile
     public void setWar(File war) {
         this.war = war;
     }
