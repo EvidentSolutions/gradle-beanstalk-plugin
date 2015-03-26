@@ -18,7 +18,7 @@ dependencies {
 }
 
 group = 'fi.evident.gradle.beanstalk'
-version = '0.0.3'
+version = '0.0.4'
 
 pluginBundle {
     website = 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
