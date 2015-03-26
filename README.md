@@ -9,9 +9,6 @@ First apply the plugin:
     buildscript {
         repositories {
             jcenter()
-            maven {
-                url 'http://dl.bintray.com/evident/gradle-plugins'
-            }
         }
         dependencies {
             classpath "fi.evident.gradle.beanstalk:gradle-beanstalk-plugin:0.0.2"
