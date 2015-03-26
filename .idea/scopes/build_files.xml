@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="build files" pattern="file:build.gradle||file:settings.gradle" />
+</component>
