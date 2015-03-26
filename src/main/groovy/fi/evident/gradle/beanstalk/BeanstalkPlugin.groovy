@@ -1,5 +1,8 @@
 package fi.evident.gradle.beanstalk
 
+import com.amazonaws.auth.AWSCredentialsProviderChain
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+import com.amazonaws.auth.SystemPropertiesCredentialsProvider
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -22,7 +25,13 @@ class BeanstalkPlugin implements Plugin<Project> {
                     t.dependsOn depl.war
                     t << {
                         def label = new Date().format("yyyyMMdd'T'HHmmss");
-                        def credentialsProvider = new ProfileCredentialsProvider(beanstalk.profile)
+                        def credentialsProvider =
+                            new AWSCredentialsProviderChain(
+                                new EnvironmentVariableCredentialsProvider(),
+                                new SystemPropertiesCredentialsProvider(),
+                                new ProfileCredentialsProvider(beanstalk.profile)
+                            );
+
                         BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.s3Endpoint, beanstalk.beanstalkEndpoint, credentialsProvider)
                         deployer.deploy(depl.war.outputs.files.singleFile, depl.application, depl.environment, label)
                     }
