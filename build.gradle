@@ -1,14 +1,20 @@
 plugins {
-    id 'nu.studer.plugindev' version '1.0.3'
+    id "com.gradle.plugin-publish" version "0.9.0"
 }
 
 apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
 
 ext {
     awsApiVersion = '1.9.25'
 }
 
 dependencies {
+    compile gradleApi()
+    compile localGroovy()
     compile "com.amazonaws:aws-java-sdk-elasticbeanstalk:$awsApiVersion"
     compile "com.amazonaws:aws-java-sdk-s3:$awsApiVersion"
 }
@@ -16,28 +22,16 @@ dependencies {
 group = 'fi.evident.gradle.beanstalk'
 version = '0.0.3-SNAPSHOT'
 
-plugindev {
-    pluginId = 'fi.evident.beanstalk'
-    pluginImplementationClass 'fi.evident.gradle.beanstalk.BeanstalkPlugin'
-    pluginDescription 'Gradle plugin for AWS Elastic Beanstalk'
-    pluginLicenses 'MIT'
-    pluginTags 'gradle', 'aws'
-    authorId 'komu'
-    authorName 'Juha Komulainen'
-    authorEmail 'juha.komulainen@evident.fi'
-    projectUrl 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
-    projectIssuesUrl 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin/issues'
-    projectVcsUrl 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
-    projectInceptionYear '2015'
-    done() // do not omit this
-}
+pluginBundle {
+    website = 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
+    vcsUrl = 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
+    description = 'Gradle plugin for AWS Elastic Beanstalk'
+    tags = ['aws', 'beanstalk']
 
-bintray {
-    user = project.hasProperty('bintrayUser') ? project.getProperty('bintrayUser') : null
-    key =  project.hasProperty('bintrayApiKey') ? project.getProperty('bintrayApiKey') : null
-
-    pkg {
-        repo = 'gradle-plugins'
-        userOrg = 'evident'
+    plugins {
+        beanstalkPlugin {
+            id = 'fi.evident.beanstalk'
+            displayName = 'Gradle Beanstalk plugin'
+        }
     }
 }
