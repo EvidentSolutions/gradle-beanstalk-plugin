@@ -21,8 +21,8 @@ group = 'fi.evident.gradle.beanstalk'
 version = '0.0.4'
 
 pluginBundle {
-    website = 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
-    vcsUrl = 'https://bitbucket.org/evidentsolutions/gradle-beanstalk-plugin'
+    website = 'https://github.com/EvidentSolutions/gradle-beanstalk-plugin'
+    vcsUrl = 'https://github.com/EvidentSolutions/gradle-beanstalk-plugin'
     description = 'Gradle plugin for AWS Elastic Beanstalk'
     tags = ['aws', 'beanstalk']
 
