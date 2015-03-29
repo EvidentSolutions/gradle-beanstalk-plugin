@@ -33,8 +33,6 @@ class DeployRule implements Rule {
                     BeanstalkDeployment deployment = deployments.getAt(env);
                     task.setBeanstalk(beanstalk);
                     task.setDeployment(deployment);
-                    task.setWar(deployment.getWar().getOutputs().getFiles().getSingleFile());
-                    task.dependsOn(deployment.getWar());
                 }
             });
         }

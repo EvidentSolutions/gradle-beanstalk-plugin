@@ -1,13 +1,11 @@
 package fi.evident.gradle.beanstalk;
 
-import org.gradle.api.Task;
-
 public class BeanstalkDeployment {
 
     private final String name;
     private String application;
     private String environment;
-    private Task war;
+    private Object war;
 
     public BeanstalkDeployment(String name) {
         this.name = name;
@@ -33,11 +31,11 @@ public class BeanstalkDeployment {
         this.environment = environment;
     }
 
-    public Task getWar() {
+    public Object getWar() {
         return war;
     }
 
-    public void setWar(Task war) {
+    public void setWar(Object war) {
         this.war = war;
     }
 }
