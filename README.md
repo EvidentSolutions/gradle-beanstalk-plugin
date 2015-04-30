@@ -23,13 +23,13 @@ Next, configure some deployments in your `build.gradle`:
     
         deployments {
             staging {
-                war = devWar
+                war = tasks.war
                 application = 'my-app'
                 environment = 'my-app-staging'
             }
     
             production {
-                war = productionWar
+                war = tasks.productionWar
                 application = 'my-app'
                 environment = 'my-app-production'
             }
