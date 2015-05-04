@@ -13,7 +13,7 @@ First, create `~/.aws/credentials` with a profile for your app:
 Next, configure some deployments in your `build.gradle`:
 
     plugins {
-        id "fi.evident.beanstalk" version "0.0.3"
+        id "fi.evident.beanstalk" version "0.0.5"
     }
 
     beanstalk {
