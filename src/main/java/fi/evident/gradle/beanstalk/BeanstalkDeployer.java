@@ -34,12 +34,12 @@ public class BeanstalkDeployer {
         elasticBeanstalk.setEndpoint(beanstalkEndpoint);
     }
 
-    public void deploy(File warFile, String applicationName, String environmentName, String versionLabel) {
+    public void deploy(File warFile, String applicationName, String environmentName, String templateName, String versionLabel) {
         log.info("Starting deployment of {}", applicationName);
 
         S3Location bundle = uploadCodeBundle(warFile);
         ApplicationVersionDescription version = createApplicationVersion(bundle, applicationName, versionLabel);
-        deployNewVersion(version.getVersionLabel(), environmentName);
+        deployNewVersion(version.getVersionLabel(), environmentName, applicationName, templateName);
         deleteOldVersions(applicationName);
     }
 
@@ -87,15 +87,36 @@ public class BeanstalkDeployer {
         elasticBeanstalk.deleteApplicationVersion(deleteRequest);
     }
 
-    private void deployNewVersion(String versionLabel, String environmentName) {
-        log.info("Update environment with uploaded application version");
+    private void deployNewVersion(String versionLabel, String environmentName, String applicationName, String templateName) {
+        log.info("Describe environments to check if environment exists");
 
-        UpdateEnvironmentRequest updateEnvironmentRequest = new UpdateEnvironmentRequest();
-        updateEnvironmentRequest.setEnvironmentName(environmentName);
-        updateEnvironmentRequest.setVersionLabel(versionLabel);
+        ArrayList<String> environmentNames = new ArrayList<String>();
+        environmentNames.add(environmentName);
+        DescribeEnvironmentsRequest describeEnvironmentsRequest = new DescribeEnvironmentsRequest();
+        describeEnvironmentsRequest.setEnvironmentNames(environmentNames);
 
-        UpdateEnvironmentResult updateEnvironmentResult = elasticBeanstalk.updateEnvironment(updateEnvironmentRequest);
-        log.info("Updated environment {}", updateEnvironmentResult);
+        DescribeEnvironmentsResult describeEnvironmentsResult = elasticBeanstalk.describeEnvironments(describeEnvironmentsRequest);
+        if (describeEnvironmentsResult.getEnvironments().size() == 0) {
+            log.info("Create environment with uploaded application version");
+
+            CreateEnvironmentRequest createEnvironmentRequest = new CreateEnvironmentRequest();
+            createEnvironmentRequest.setApplicationName(applicationName);
+            createEnvironmentRequest.setEnvironmentName(environmentName);
+            createEnvironmentRequest.setTemplateName(templateName);
+            createEnvironmentRequest.setVersionLabel(versionLabel);
+
+            CreateEnvironmentResult createEnvironmentResult = elasticBeanstalk.createEnvironment(createEnvironmentRequest);
+            log.info("Created environment {}", createEnvironmentResult);
+        } else {
+            log.info("Update environment with uploaded application version");
+
+            UpdateEnvironmentRequest updateEnvironmentRequest = new UpdateEnvironmentRequest();
+            updateEnvironmentRequest.setEnvironmentName(environmentName);
+            updateEnvironmentRequest.setVersionLabel(versionLabel);
+
+            UpdateEnvironmentResult updateEnvironmentResult = elasticBeanstalk.updateEnvironment(updateEnvironmentRequest);
+            log.info("Updated environment {}", updateEnvironmentResult);
+        }
     }
 
     private ApplicationVersionDescription createApplicationVersion(S3Location bundle, String applicationName, String versionLabel) {
