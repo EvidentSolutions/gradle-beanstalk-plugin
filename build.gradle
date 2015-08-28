@@ -1,5 +1,5 @@
 plugins {
-    id "com.gradle.plugin-publish" version "0.9.0"
+    id "com.gradle.plugin-publish" version "0.9.1"
 }
 
 apply plugin: 'java-gradle-plugin'
@@ -9,7 +9,7 @@ repositories {
 }
 
 ext {
-    awsApiVersion = '1.9.25'
+    awsApiVersion = '1.10.13'
 }
 
 dependencies {
