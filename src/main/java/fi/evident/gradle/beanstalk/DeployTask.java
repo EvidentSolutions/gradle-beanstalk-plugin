@@ -22,7 +22,8 @@ public class DeployTask extends DefaultTask {
     protected void deploy() {
         String versionLabel = getProject().getVersion().toString();
         if (versionLabel.endsWith("-SNAPSHOT")) {
-            versionLabel += new Date().getTime(); // Append time to get unique version label
+            String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
+            versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
         }
 
         AWSCredentialsProviderChain credentialsProvider = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
