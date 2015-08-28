@@ -130,9 +130,11 @@ public class BeanstalkDeployer {
         req.setApplicationName(applicationName);
 
         Set<String> result = new TreeSet<String>();
-        for (EnvironmentDescription description : elasticBeanstalk.describeEnvironments(req).getEnvironments())
-            result.add(description.getVersionLabel());
-
+        for (EnvironmentDescription description : elasticBeanstalk.describeEnvironments(req).getEnvironments()) {
+            if (description.getVersionLabel() != null) { // Ignore null value (for example when environment is launching)
+                result.add(description.getVersionLabel());
+            }
+        }
         return result;
     }
 }
