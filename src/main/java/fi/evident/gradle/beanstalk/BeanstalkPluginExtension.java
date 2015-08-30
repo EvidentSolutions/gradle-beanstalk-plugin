@@ -5,6 +5,7 @@ public class BeanstalkPluginExtension {
     private String profile;
     private String s3Endpoint;
     private String beanstalkEndpoint;
+    private Integer versionsToKeep;
 
     public String getProfile() {
         return profile;
@@ -28,5 +29,13 @@ public class BeanstalkPluginExtension {
 
     public void setBeanstalkEndpoint(String beanstalkEndpoint) {
         this.beanstalkEndpoint = beanstalkEndpoint;
+    }
+
+    public Integer getVersionsToKeep() {
+        return versionsToKeep;
+    }
+
+    public void setVersionsToKeep(Integer versionsToKeep) {
+        this.versionsToKeep = versionsToKeep;
     }
 }

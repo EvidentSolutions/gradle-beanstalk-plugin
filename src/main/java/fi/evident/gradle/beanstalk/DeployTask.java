@@ -31,7 +31,7 @@ public class DeployTask extends DefaultTask {
         BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.getS3Endpoint(), beanstalk.getBeanstalkEndpoint(), credentialsProvider);
 
         File warFile = getProject().files(war).getSingleFile();
-        deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), versionLabel);
+        deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), versionLabel, beanstalk.getVersionsToKeep());
     }
 
     public void setBeanstalk(BeanstalkPluginExtension beanstalk) {
