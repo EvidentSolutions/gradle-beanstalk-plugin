@@ -20,6 +20,7 @@ Next, configure some deployments in your `build.gradle`:
         profile = 'my-profile'
         s3Endpoint = "s3-eu-west-1.amazonaws.com"
         beanstalkEndpoint = "elasticbeanstalk.eu-west-1.amazonaws.com"
+        versionsToKeep = 20 // Optional, if set, old versions will be deleted
     
         deployments {
             staging {

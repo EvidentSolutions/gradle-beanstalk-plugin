@@ -23,8 +23,6 @@ public class BeanstalkDeployer {
 
     private final AWSElasticBeanstalk elasticBeanstalk;
 
-    private static final int VERSIONS_TO_KEEP = 20;
-
     private static final Logger log = LoggerFactory.getLogger(BeanstalkDeployer.class);
 
     public BeanstalkDeployer(String s3Endpoint, String beanstalkEndpoint, AWSCredentialsProvider credentialsProvider) {
@@ -34,21 +32,23 @@ public class BeanstalkDeployer {
         elasticBeanstalk.setEndpoint(beanstalkEndpoint);
     }
 
-    public void deploy(File warFile, String applicationName, String environmentName, String versionLabel) {
+    public void deploy(File warFile, String applicationName, String environmentName, String versionLabel, Integer versionsToKeep) {
         log.info("Starting deployment of {}", applicationName);
 
         S3Location bundle = uploadCodeBundle(warFile);
         ApplicationVersionDescription version = createApplicationVersion(bundle, applicationName, versionLabel);
         deployNewVersion(version.getVersionLabel(), environmentName);
-        deleteOldVersions(applicationName);
+        if (versionsToKeep != null && versionsToKeep > 0) {
+            deleteOldVersions(applicationName, versionsToKeep);
+        }
     }
 
-    public void deleteOldVersions(String applicationName) {
+    public void deleteOldVersions(String applicationName, Integer versionsToKeep) {
         DescribeApplicationVersionsRequest search = new DescribeApplicationVersionsRequest();
         search.setApplicationName(applicationName);
 
         List<ApplicationVersionDescription> versions = elasticBeanstalk.describeApplicationVersions(search).getApplicationVersions();
-        List<ApplicationVersionDescription> versionsToRemove = versionsToRemove(versions);
+        List<ApplicationVersionDescription> versionsToRemove = versionsToRemove(versions, versionsToKeep);
         Set<String> deployedLabels = findDeployedLabels(applicationName);
 
         log.info("Removing {} oldest versions of total {} versions", versionsToRemove.size(), versions.size());
@@ -61,8 +61,8 @@ public class BeanstalkDeployer {
         }
     }
 
-    private static List<ApplicationVersionDescription> versionsToRemove(List<ApplicationVersionDescription> versions) {
-        int numberOfVersionsToRemove = versions.size() - VERSIONS_TO_KEEP;
+    private static List<ApplicationVersionDescription> versionsToRemove(List<ApplicationVersionDescription> versions, Integer versionsToKeep) {
+        int numberOfVersionsToRemove = versions.size() - versionsToKeep;
         if (numberOfVersionsToRemove <= 0)
             return emptyList();
 
