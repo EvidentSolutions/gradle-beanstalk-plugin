@@ -20,13 +20,18 @@ public class DeployTask extends DefaultTask {
 
     @TaskAction
     protected void deploy() {
-        String label = new SimpleDateFormat("yyyyMMdd'T'HHmmss").format(new Date());
+        String versionLabel = getProject().getVersion().toString();
+        if (versionLabel.endsWith("-SNAPSHOT")) {
+            String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
+            versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
+        }
+
         AWSCredentialsProviderChain credentialsProvider = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
 
         BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.getS3Endpoint(), beanstalk.getBeanstalkEndpoint(), credentialsProvider);
 
         File warFile = getProject().files(war).getSingleFile();
-        deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), label);
+        deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), versionLabel);
     }
 
     public void setBeanstalk(BeanstalkPluginExtension beanstalk) {
