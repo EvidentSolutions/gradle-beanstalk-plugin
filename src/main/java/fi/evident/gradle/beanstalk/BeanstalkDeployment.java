@@ -5,6 +5,7 @@ public class BeanstalkDeployment {
     private final String name;
     private String application;
     private String environment;
+    private String template = "default";
     private Object war;
 
     public BeanstalkDeployment(String name) {
@@ -29,6 +30,14 @@ public class BeanstalkDeployment {
 
     public void setEnvironment(String environment) {
         this.environment = environment;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
     }
 
     public Object getWar() {
