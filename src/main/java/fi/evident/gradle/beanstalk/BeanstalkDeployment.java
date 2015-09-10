@@ -7,7 +7,9 @@ public class BeanstalkDeployment {
     private String environment;
     private String template = "default";
     private Object war;
-
+    private String account;
+    private String arnRole;
+    
     public BeanstalkDeployment(String name) {
         this.name = name;
     }
@@ -46,5 +48,21 @@ public class BeanstalkDeployment {
 
     public void setWar(Object war) {
         this.war = war;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getArnRole() {
+        return arnRole;
+    }
+
+    public void setArnRole(String arnRole) {
+        this.arnRole = arnRole;
     }
 }

@@ -3,7 +3,7 @@ plugins {
 }
 
 apply plugin: 'java-gradle-plugin'
-
+apply plugin: 'eclipse'
 repositories {
     jcenter()
 }
@@ -15,6 +15,8 @@ ext {
 dependencies {
     compile "com.amazonaws:aws-java-sdk-elasticbeanstalk:$awsApiVersion"
     compile "com.amazonaws:aws-java-sdk-s3:$awsApiVersion"
+    compile "com.amazonaws:aws-java-sdk-core:$awsApiVersion"
+    compile "com.amazonaws:aws-java-sdk-sts:$awsApiVersion"
 }
 
 group = 'fi.evident.gradle.beanstalk'

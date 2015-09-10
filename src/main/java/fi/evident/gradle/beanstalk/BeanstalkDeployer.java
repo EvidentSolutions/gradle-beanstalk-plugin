@@ -1,11 +1,13 @@
 package fi.evident.gradle.beanstalk;
 
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalk;
 import com.amazonaws.services.elasticbeanstalk.AWSElasticBeanstalkClient;
 import com.amazonaws.services.elasticbeanstalk.model.*;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+
 import org.joda.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,13 @@ public class BeanstalkDeployer {
     public BeanstalkDeployer(String s3Endpoint, String beanstalkEndpoint, AWSCredentialsProvider credentialsProvider) {
         s3 = new AmazonS3Client(credentialsProvider);
         elasticBeanstalk = new AWSElasticBeanstalkClient(credentialsProvider);
+        s3.setEndpoint(s3Endpoint);
+        elasticBeanstalk.setEndpoint(beanstalkEndpoint);
+    }
+    
+    public BeanstalkDeployer(String s3Endpoint, String beanstalkEndpoint, AWSCredentials awsCredentials) {
+        s3 = new AmazonS3Client(awsCredentials);
+        elasticBeanstalk = new AWSElasticBeanstalkClient(awsCredentials);
         s3.setEndpoint(s3Endpoint);
         elasticBeanstalk.setEndpoint(beanstalkEndpoint);
     }
