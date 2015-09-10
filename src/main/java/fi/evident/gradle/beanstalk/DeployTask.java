@@ -32,15 +32,15 @@ public class DeployTask extends DefaultTask {
         }
 
         AWSCredentials awsCredentials;
-        if (deployment.getAccount().equals(beanstalk.getProfile())) {
+        if (deployment.getAccount()==null || deployment.getAccount().isEmpty()) {
             AWSCredentialsProviderChain credentialsProviderChain = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
             awsCredentials = credentialsProviderChain.getCredentials();
         }else{
-            System.out.println(deployment.getArnRole());
             awsCredentials =  CredentialUtility.getAssumeRoleCredentials(deployment.getArnRole(), deployment.getAccount());
-            log.info("Obtained credentials using arnRole {} for account {}",deployment.getArnRole() , deployment.getAccount());
+            log.info("Obtained credentials using arnRole {} for account {}", deployment.getArnRole() , deployment.getAccount());
+            beanstalk.setBeanstalkEndpoint(deployment.getBeanstalkEndpoint());
+            beanstalk.setS3Endpoint(deployment.getS3Endpoint());
         }
-
         BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.getS3Endpoint(), beanstalk.getBeanstalkEndpoint(), awsCredentials);
         File warFile = getProject().files(war).getSingleFile();
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
