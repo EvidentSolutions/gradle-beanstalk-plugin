@@ -9,6 +9,8 @@ public class BeanstalkDeployment {
     private Object war;
     private String account;
     private String arnRole;
+    private String s3Endpoint;
+    private String beanstalkEndpoint;
     
     public BeanstalkDeployment(String name) {
         this.name = name;
@@ -64,5 +66,21 @@ public class BeanstalkDeployment {
 
     public void setArnRole(String arnRole) {
         this.arnRole = arnRole;
+    }
+
+    public String getS3Endpoint() {
+        return s3Endpoint;
+    }
+
+    public void setS3Endpoint(String s3Endpoint) {
+        this.s3Endpoint = s3Endpoint;
+    }
+
+    public String getBeanstalkEndpoint() {
+        return beanstalkEndpoint;
+    }
+
+    public void setBeanstalkEndpoint(String beanstalkEndpoint) {
+        this.beanstalkEndpoint = beanstalkEndpoint;
     }
 }
