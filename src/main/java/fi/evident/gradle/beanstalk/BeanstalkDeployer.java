@@ -29,13 +29,6 @@ public class BeanstalkDeployer {
 
     private static final Logger log = LoggerFactory.getLogger(BeanstalkDeployer.class);
 
-    public BeanstalkDeployer(String s3Endpoint, String beanstalkEndpoint, AWSCredentialsProvider credentialsProvider) {
-        s3 = new AmazonS3Client(credentialsProvider);
-        elasticBeanstalk = new AWSElasticBeanstalkClient(credentialsProvider);
-        s3.setEndpoint(s3Endpoint);
-        elasticBeanstalk.setEndpoint(beanstalkEndpoint);
-    }
-    
     public BeanstalkDeployer(String s3Endpoint, String beanstalkEndpoint, AWSCredentials awsCredentials) {
         s3 = new AmazonS3Client(awsCredentials);
         elasticBeanstalk = new AWSElasticBeanstalkClient(awsCredentials);

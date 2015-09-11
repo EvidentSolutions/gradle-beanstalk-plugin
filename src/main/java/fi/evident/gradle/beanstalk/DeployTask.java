@@ -38,10 +38,10 @@ public class DeployTask extends DefaultTask {
         }else{
             awsCredentials =  CredentialUtility.getAssumeRoleCredentials(deployment.getArnRole(), deployment.getAccount());
             log.info("Obtained credentials using arnRole {} for account {}", deployment.getArnRole() , deployment.getAccount());
-            beanstalk.setBeanstalkEndpoint(deployment.getBeanstalkEndpoint());
-            beanstalk.setS3Endpoint(deployment.getS3Endpoint());
         }
-        BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.getS3Endpoint(), beanstalk.getBeanstalkEndpoint(), awsCredentials);
+        String s3Endpoint = Utilities.coalesce(deployment.getS3Endpoint(),beanstalk.getS3Endpoint());
+        String beanstalkEndpoint =Utilities.coalesce(deployment.getBeanstalkEndpoint(),beanstalk.getBeanstalkEndpoint());
+        BeanstalkDeployer deployer = new BeanstalkDeployer(s3Endpoint, beanstalkEndpoint, awsCredentials);
         File warFile = getProject().files(war).getSingleFile();
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
     }
