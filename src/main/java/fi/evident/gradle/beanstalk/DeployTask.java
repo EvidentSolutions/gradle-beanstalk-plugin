@@ -1,6 +1,6 @@
 package fi.evident.gradle.beanstalk;
 
-import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.AWSCredentialsProviderChain;
 import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
@@ -30,18 +30,16 @@ public class DeployTask extends DefaultTask {
             String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
             versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
         }
-
-        AWSCredentials awsCredentials;
+        AWSCredentialsProvider credentialsProvider;
         if (deployment.getAccount()==null || deployment.getAccount().isEmpty()) {
-            AWSCredentialsProviderChain credentialsProviderChain = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
-            awsCredentials = credentialsProviderChain.getCredentials();
+            credentialsProvider = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
         }else{
-            awsCredentials =  CredentialUtility.getAssumeRoleCredentials(deployment.getArnRole(), deployment.getAccount());
+            credentialsProvider =  CredentialUtility.getAssumeRoleCredentials(deployment.getArnRole(), deployment.getAccount());
             log.info("Obtained credentials using arnRole {} for account {}", deployment.getArnRole() , deployment.getAccount());
         }
         String s3Endpoint = Utilities.coalesce(deployment.getS3Endpoint(),beanstalk.getS3Endpoint());
         String beanstalkEndpoint =Utilities.coalesce(deployment.getBeanstalkEndpoint(),beanstalk.getBeanstalkEndpoint());
-        BeanstalkDeployer deployer = new BeanstalkDeployer(s3Endpoint, beanstalkEndpoint, awsCredentials);
+        BeanstalkDeployer deployer = new BeanstalkDeployer(s3Endpoint, beanstalkEndpoint, credentialsProvider);
         File warFile = getProject().files(war).getSingleFile();
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
     }
