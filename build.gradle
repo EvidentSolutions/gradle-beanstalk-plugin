@@ -2,10 +2,33 @@ plugins {
     id "com.gradle.plugin-publish" version "0.9.1"
 }
 
+apply plugin: 'maven'
 apply plugin: 'java-gradle-plugin'
 apply plugin: 'eclipse'
+   
+def env = System.getenv()
+def nexusUser = env['nexusUser']
+def nexusPassword = env['nexusPassword']
 repositories {
     jcenter()
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://repo.spring.io/libs-release" }
+    maven { url =  "http://nexus.ebgroup.elektrobit.com:8080/nexus/content/groups/public/" }
+    maven {
+        url = "http://nexus.ebgroup.elektrobit.com:8080/nexus/content/repositories/accelera.snapshots/"
+        credentials {
+            username nexusUser
+            password nexusPassword
+        }
+    }
+    maven {
+        url = "http://nexus.ebgroup.elektrobit.com:8080/nexus/content/repositories/accelera.releases/"
+        credentials {
+            username nexusUser
+            password nexusPassword
+        }
+    }
 }
 
 ext {
@@ -19,8 +42,8 @@ dependencies {
     compile "com.amazonaws:aws-java-sdk-sts:$awsApiVersion"
 }
 
-group = 'fi.evident.gradle.beanstalk'
-version '0.0.61'
+group = 'com.elektrobit.odin'
+version '0.0.65'
 
 pluginBundle {
     website = 'https://github.com/EvidentSolutions/gradle-beanstalk-plugin'
@@ -34,4 +57,15 @@ pluginBundle {
             displayName = 'Gradle Beanstalk plugin'
         }
     }
+}
+
+uploadArchives {
+	repositories.mavenDeployer {
+		repository(url :  "http://nexus.ebgroup.elektrobit.com:8080/nexus/content/repositories/con.releases/"){
+			authentication(userName: nexusUser, password: nexusPassword)
+		}
+		snapshotRepository(url :  "http://nexus.ebgroup.elektrobit.com:8080/nexus/content/repositories/con.snapshots/"){
+			authentication(userName: nexusUser, password: nexusPassword)
+		}
+	}
 }
