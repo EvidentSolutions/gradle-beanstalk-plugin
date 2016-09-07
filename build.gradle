@@ -9,7 +9,7 @@ repositories {
 }
 
 ext {
-    awsApiVersion = '1.10.13'
+    awsApiVersion = '1.11.32'
 }
 
 dependencies {
