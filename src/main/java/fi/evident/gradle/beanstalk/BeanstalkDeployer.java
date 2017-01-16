@@ -14,6 +14,7 @@ import java.io.File;
 import java.util.*;
 
 import static fi.evident.gradle.beanstalk.EncodingUtils.urlEncode;
+import static fi.evident.gradle.beanstalk.StringUtils.*;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.sort;
 
@@ -139,11 +140,19 @@ public class BeanstalkDeployer {
         log.info("Uploading {} to Amazon S3", warFile);
 
         String bucketName = elasticBeanstalk.createStorageLocation().getS3Bucket();
-        String key = urlEncode(warFile.getName());
+        String key = createS3KeyFromFileName(warFile.getName());
 
         s3.putObject(bucketName, key, warFile);
 
         return new S3Location(bucketName, key);
+    }
+
+    static String createS3KeyFromFileName(String name) {
+        String baseName = baseName(name);
+        String extension = extension(name);
+        String randomPart = randomString(8);
+
+        return urlEncode(baseName + "-" + randomPart + extension);
     }
 
     private Set<String> findDeployedLabels(String applicationName) {
