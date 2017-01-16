@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gradle-beanstalk-plugin.iml" filepath="$PROJECT_DIR$/gradle-beanstalk-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gradle-beanstalk-plugin.iml" filepath="$PROJECT_DIR$/.idea/modules/gradle-beanstalk-plugin.iml" />
     </modules>
   </component>
 </project>
