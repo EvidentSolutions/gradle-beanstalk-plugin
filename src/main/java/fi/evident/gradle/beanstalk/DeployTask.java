@@ -20,11 +20,7 @@ public class DeployTask extends DefaultTask {
 
     @TaskAction
     protected void deploy() {
-        String versionLabel = getProject().getVersion().toString();
-        if (versionLabel.endsWith("-SNAPSHOT")) {
-            String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
-            versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
-        }
+        String versionLabel = getVersionLabel();
 
         AWSCredentialsProviderChain credentialsProvider = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()));
 
@@ -32,6 +28,15 @@ public class DeployTask extends DefaultTask {
 
         File warFile = getProject().files(war).getSingleFile();
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
+    }
+
+    protected String getVersionLabel() {
+        String versionLabel = getProject().getVersion().toString();
+        if (versionLabel.endsWith("-SNAPSHOT")) {
+            String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
+            versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
+        }
+        return deployment.getVersionPrefix() + versionLabel;
     }
 
     public void setBeanstalk(BeanstalkPluginExtension beanstalk) {

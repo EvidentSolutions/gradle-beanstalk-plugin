@@ -6,6 +6,7 @@ public class BeanstalkDeployment {
     private String application;
     private String environment;
     private String template = "default";
+    private String versionPrefix = "";
     private Object war;
 
     public BeanstalkDeployment(String name) {
@@ -14,6 +15,14 @@ public class BeanstalkDeployment {
 
     public final String getName() {
         return name;
+    }
+
+    public String getVersionPrefix() {
+        return versionPrefix;
+    }
+
+    public void setVersionPrefix(String versionPrefix) {
+        this.versionPrefix = versionPrefix;
     }
 
     public String getApplication() {
