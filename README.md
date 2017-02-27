@@ -15,7 +15,7 @@ Or set `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables.
 Next, configure some deployments in your `build.gradle`:
 
     plugins {
-        id "fi.evident.beanstalk" version "0.1.0"
+        id "fi.evident.beanstalk" version "0.1.1"
     }
 
     beanstalk {
