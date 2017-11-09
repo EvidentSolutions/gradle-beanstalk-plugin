@@ -3,7 +3,7 @@
 ### Changes
 
   - Renamed `war` configuration variable to `file` to emphasize universality of this plugin ([#11](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/issues/11))
-
+  - Upgrade Gradle to 4.2
 
 ## 0.1.1 (2017-02-27)
 
