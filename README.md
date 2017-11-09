@@ -1,6 +1,6 @@
 # gradle-beanstalk-plugin
 
-Gradle plugin for deploying WARs to AWS Elastic Beanstalk.
+Gradle plugin for deploying applications to AWS Elastic Beanstalk.
 
 ## Usage
 
@@ -26,13 +26,13 @@ Next, configure some deployments in your `build.gradle`:
         deployments {
             // Example to deploy to the same env
             staging {
-                war = tasks.war
+                file = tasks.war
                 application = 'my-app'
                 environment = 'my-app-staging'
             }
             // Example to create a new env for each version (to use URL swapping for blue/green deployment)
             production {
-                war = tasks.productionWar
+                file = tasks.productionWar
                 application = 'my-app'
                 environment = "my-app-${project.version.replaceAll('\\.', '-')}"
                 template = 'default' // Saved configuration name to use to create each env

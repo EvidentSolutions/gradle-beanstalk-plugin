@@ -7,7 +7,7 @@ public class BeanstalkDeployment {
     private String environment;
     private String template = "default";
     private String versionPrefix = "";
-    private Object war;
+    private Object file;
 
     public BeanstalkDeployment(String name) {
         this.name = name;
@@ -49,11 +49,21 @@ public class BeanstalkDeployment {
         this.template = template;
     }
 
-    public Object getWar() {
-        return war;
+    @Deprecated
+    public void setWar(Object war) {
+        this.file = war;
     }
 
-    public void setWar(Object war) {
-        this.war = war;
+    @Deprecated
+    public Object getWar() {
+        return file;
+    }
+
+    public void setFile(Object file) {
+        this.file = file;
+    }
+
+    public Object getFile() {
+        return file;
     }
 }
