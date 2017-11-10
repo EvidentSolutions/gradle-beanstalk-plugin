@@ -1,5 +1,5 @@
 plugins {
-    id "com.gradle.plugin-publish" version "0.9.1"
+    id "com.gradle.plugin-publish" version "0.9.9"
 }
 
 apply plugin: 'java-gradle-plugin'
@@ -19,7 +19,7 @@ dependencies {
 }
 
 group = 'fi.evident.gradle.beanstalk'
-version '0.1.2'
+version '0.1.3'
 
 pluginBundle {
     website = 'https://github.com/EvidentSolutions/gradle-beanstalk-plugin'

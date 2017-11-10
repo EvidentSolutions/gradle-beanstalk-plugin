@@ -1,3 +1,9 @@
+## 0.1.3 (2017-11-10)
+
+### Changes
+
+  - Update the publishing plugin since publishing 0.1.2 failed.
+
 ## 0.1.2 (2017-11-09)
 
 ### Changes
