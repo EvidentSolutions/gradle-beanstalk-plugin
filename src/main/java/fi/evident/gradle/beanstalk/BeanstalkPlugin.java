@@ -12,16 +12,15 @@ public class BeanstalkPlugin implements Plugin<Project> {
         ((ExtensionAware) beanstalk).getExtensions().add("deployments", deployments);
 
         project.afterEvaluate(p -> {
-            deployments.forEach(deployment -> {
-                        String name = deployment.getName();
-                        String task = "deploy" + name.substring(0, 1).toUpperCase() + name.substring(1);
+            for (BeanstalkDeployment deployment : deployments) {
+                String name = deployment.getName();
+                String task = "deploy" + Character.toUpperCase(name.charAt(0)) + name.substring(1);
 
-                        p.getTasks().create(task, DeployTask.class, deployTask -> {
-                            deployTask.setBeanstalk(beanstalk);
-                            deployTask.setDeployment(deployment);
-                        });
-                    }
-            );
+                p.getTasks().create(task, DeployTask.class, deployTask -> {
+                    deployTask.setBeanstalk(beanstalk);
+                    deployTask.setDeployment(deployment);
+                });
+            }
         });
     }
 }
