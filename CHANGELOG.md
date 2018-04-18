@@ -1,3 +1,11 @@
+## 0.2.0 (2018-04-18)
+
+### Changes
+
+  - Create all tasks during project initialization instead of creating them
+    dynamically using a rule. Now they are visible in task list. 
+    ([#16](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/16))
+
 ## 0.1.3 (2017-11-10)
 
 ### Changes
