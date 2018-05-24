@@ -18,6 +18,10 @@ Next, configure some deployments in your `build.gradle`:
         id "fi.evident.beanstalk" version "0.2.0"
     }
 
+    // beanstalk requires unique version number for each uploaded archive
+    // SNAPSHOT will be replaced with 'yyyyMMdd.HHmms' label
+    version = '0.1-SNAPSHOT'
+
     beanstalk {
         profile = 'my-profile' // Only required if using .aws/credentials
         s3Endpoint = "s3-eu-west-1.amazonaws.com"
