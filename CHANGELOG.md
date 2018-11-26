@@ -1,3 +1,9 @@
+## 0.2.1 (2018-11-26)
+
+### Changes
+
+  - Support authentication using AWS instances profile ([#21](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/issues/21))
+
 ## 0.2.0 (2018-04-18)
 
 ### Changes
