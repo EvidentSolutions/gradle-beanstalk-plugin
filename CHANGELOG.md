@@ -1,3 +1,9 @@
+## 0.2.2 (2019-03-29)
+
+### Changes
+
+  - Update AWS client libraries to so the plugin works with Java 11 ([#24](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/24)).
+
 ## 0.2.1 (2018-11-26)
 
 ### Changes
