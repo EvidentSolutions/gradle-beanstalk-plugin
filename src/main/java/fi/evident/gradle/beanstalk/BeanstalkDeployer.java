@@ -40,7 +40,9 @@ public class BeanstalkDeployer {
 
         S3Location bundle = uploadCodeBundle(warFile);
         ApplicationVersionDescription version = createApplicationVersion(bundle, applicationName, versionLabel);
-        deployNewVersion(version.getVersionLabel(), environmentName, applicationName, templateName);
+        if (environmentName != null) {
+            deployNewVersion(version.getVersionLabel(), environmentName, applicationName, templateName);
+        }
         deleteOldVersions(applicationName);
     }
 

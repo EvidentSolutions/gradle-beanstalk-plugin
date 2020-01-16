@@ -41,6 +41,12 @@ Next, configure some deployments in your `build.gradle`:
                 environment = "my-app-${project.version.replaceAll('\\.', '-')}"
                 template = 'default' // Saved configuration name to use to create each env
             }
+            // Example to upload a new version to an application without deploying it (to be able to
+            //  manually pick which environment to use)
+            upload {
+                file = tasks.war
+                application = 'my-app'
+            }
         }
     }
 
