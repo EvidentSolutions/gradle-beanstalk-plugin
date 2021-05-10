@@ -1,5 +1,5 @@
 plugins {
-    id "com.gradle.plugin-publish" version "0.9.9"
+    id "com.gradle.plugin-publish" version "0.14.0"
 }
 
 apply plugin: 'java-gradle-plugin'
@@ -9,17 +9,25 @@ repositories {
 }
 
 ext {
-    awsApiVersion = '1.11.527'
+    awsApiVersion = '1.11.1015'
 }
 
 dependencies {
-    compile "com.amazonaws:aws-java-sdk-elasticbeanstalk:$awsApiVersion"
-    compile "com.amazonaws:aws-java-sdk-s3:$awsApiVersion"
-    testCompile "junit:junit:4.12"
+    implementation "com.amazonaws:aws-java-sdk-elasticbeanstalk:$awsApiVersion"
+    implementation "com.amazonaws:aws-java-sdk-s3:$awsApiVersion"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 group = 'fi.evident.gradle.beanstalk'
-version '0.2.3'
+version '0.3.0'
+
+test {
+    useJUnitPlatform {
+        includeEngines 'junit-jupiter'
+    }
+}
 
 pluginBundle {
     website = 'https://github.com/EvidentSolutions/gradle-beanstalk-plugin'
