@@ -7,6 +7,7 @@ import com.amazonaws.auth.SystemPropertiesCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.Internal;
 import org.gradle.api.tasks.TaskAction;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class DeployTask extends DefaultTask {
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
     }
 
+    @Internal
     protected String getVersionLabel() {
         String versionLabel = getProject().getVersion().toString();
         if (versionLabel.endsWith("-SNAPSHOT")) {
