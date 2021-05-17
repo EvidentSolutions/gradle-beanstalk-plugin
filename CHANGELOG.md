@@ -1,3 +1,9 @@
+## 0.3.0 (2021-05-17)
+
+### Changes
+
+  - Fix incompatibility with Gradle 7 ([#30](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/30)).
+
 ## 0.2.2 (2019-03-29)
 
 ### Changes
