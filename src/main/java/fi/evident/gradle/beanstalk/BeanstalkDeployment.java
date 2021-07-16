@@ -7,6 +7,7 @@ public class BeanstalkDeployment {
     private String environment;
     private String template = "default";
     private String versionPrefix = "";
+    private String versionSuffix = "";
     private Object file;
 
     public BeanstalkDeployment(String name) {
@@ -23,6 +24,14 @@ public class BeanstalkDeployment {
 
     public void setVersionPrefix(String versionPrefix) {
         this.versionPrefix = versionPrefix;
+    }
+
+    public String getVersionSuffix() {
+      return versionSuffix;
+    }
+
+    public void setVersionSuffix(String versionSuffix) {
+      this.versionSuffix = versionSuffix;
     }
 
     public String getApplication() {
