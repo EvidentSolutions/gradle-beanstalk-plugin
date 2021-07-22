@@ -27,11 +27,11 @@ public class BeanstalkDeployment {
     }
 
     public String getVersionSuffix() {
-      return versionSuffix;
+        return versionSuffix;
     }
 
     public void setVersionSuffix(String versionSuffix) {
-      this.versionSuffix = versionSuffix;
+        this.versionSuffix = versionSuffix;
     }
 
     public String getApplication() {
