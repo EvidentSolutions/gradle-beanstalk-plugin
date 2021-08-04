@@ -39,7 +39,7 @@ public class DeployTask extends DefaultTask {
             String timeLabel = new SimpleDateFormat("yyyyMMdd'.'HHmmss").format(new Date());
             versionLabel = versionLabel.replace("SNAPSHOT", timeLabel); // Append time to get unique version label
         }
-        return deployment.getVersionPrefix() + versionLabel;
+        return deployment.getVersionPrefix() + versionLabel + deployment.getVersionSuffix();
     }
 
     public void setBeanstalk(BeanstalkPluginExtension beanstalk) {
