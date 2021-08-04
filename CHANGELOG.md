@@ -1,3 +1,9 @@
+## 0.3.1 (2021-08-04)
+
+### Changes
+
+  - Add versionSuffix ([#30](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/31)).
+
 ## 0.3.0 (2021-05-17)
 
 ### Changes
