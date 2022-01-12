@@ -14,6 +14,8 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static java.util.Optional.ofNullable;
+
 public class DeployTask extends DefaultTask {
 
     private BeanstalkPluginExtension beanstalk;
@@ -26,7 +28,9 @@ public class DeployTask extends DefaultTask {
 
         AWSCredentialsProviderChain credentialsProvider = new AWSCredentialsProviderChain(new EnvironmentVariableCredentialsProvider(), new SystemPropertiesCredentialsProvider(), new ProfileCredentialsProvider(beanstalk.getProfile()), new EC2ContainerCredentialsProviderWrapper());
 
-        BeanstalkDeployer deployer = new BeanstalkDeployer(beanstalk.getS3Endpoint(), beanstalk.getBeanstalkEndpoint(), credentialsProvider);
+        BeanstalkDeployer deployer = new BeanstalkDeployer(ofNullable(deployment.getS3Endpoint()).orElse(beanstalk.getS3Endpoint()),
+                                                           ofNullable(deployment.getBeanstalkEndpoint()).orElse(beanstalk.getBeanstalkEndpoint()),
+                                                            credentialsProvider);
 
         File warFile = getProject().files(war).getSingleFile();
         deployer.deploy(warFile, deployment.getApplication(), deployment.getEnvironment(), deployment.getTemplate(), versionLabel);
