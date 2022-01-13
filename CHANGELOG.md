@@ -1,3 +1,9 @@
+## 0.3.3 (2022-01-13)
+
+### Changes
+
+- Allow Zones for deployment ([#34](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/34)).
+
 ## 0.3.2 (2021-08-05)
 
 ### Changes
@@ -8,7 +14,7 @@
 
 ### Changes
 
-  - Add versionSuffix ([#30](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/31)).
+  - Add versionSuffix ([#31](https://github.com/EvidentSolutions/gradle-beanstalk-plugin/pull/31)).
 
 ## 0.3.0 (2021-05-17)
 
