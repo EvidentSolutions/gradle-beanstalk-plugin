@@ -9,6 +9,8 @@ public class BeanstalkDeployment {
     private String versionPrefix = "";
     private String versionSuffix = "";
     private Object file;
+    private String s3Endpoint;
+    private String beanstalkEndpoint;
 
     public BeanstalkDeployment(String name) {
         this.name = name;
@@ -74,5 +76,21 @@ public class BeanstalkDeployment {
 
     public Object getFile() {
         return file;
+    }
+
+    public String getS3Endpoint() {
+        return s3Endpoint;
+    }
+
+    public void setS3Endpoint(String s3Endpoint) {
+        this.s3Endpoint = s3Endpoint;
+    }
+
+    public String getBeanstalkEndpoint() {
+        return beanstalkEndpoint;
+    }
+
+    public void setBeanstalkEndpoint(String beanstalkEndpoint) {
+        this.beanstalkEndpoint = beanstalkEndpoint;
     }
 }
